@@ -1,0 +1,17 @@
+{
+  "name": "@recruiting-bingo/worker",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy"
+  },
+  "dependencies": {
+    "@recruiting-bingo/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240512.0",
+    "typescript": "^5.4.0",
+    "wrangler": "^3.60.0"
+  }
+}

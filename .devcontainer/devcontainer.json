@@ -1,0 +1,30 @@
+{
+  "name": "Recruiting Bingo Dev",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "workspaceFolder": "/workspaces/recruiting-bingo",
+  "postCreateCommand": "npm install && (npm install -g wrangler || true)",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "cloudflare.cloudflare-workers"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "5173": {
+      "label": "Vite Dev Server",
+      "onAutoForward": "notify"
+    },
+    "8787": {
+      "label": "Wrangler Dev Server",
+      "onAutoForward": "notify"
+    }
+  }
+}

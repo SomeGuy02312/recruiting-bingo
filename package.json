@@ -1,0 +1,15 @@
+{
+  "name": "recruiting-bingo",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/worker",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev:worker": "npm --workspace apps/worker run dev",
+    "build:web": "npm --workspace apps/web run build",
+    "deploy:worker": "npm --workspace apps/worker run deploy"
+  }
+}
