@@ -10,7 +10,7 @@ const worker = {
     const { pathname } = url;
 
     if (pathname.startsWith("/api/rooms")) {
-      return handleRooms(request, env, ctx);
+      return handleRooms(request, env);
     }
 
     if (pathname === "/api/stats") {
