@@ -7,7 +7,7 @@
     "deploy": "npx wrangler deploy"
   },
   "dependencies": {
-    "@recruiting-bingo/shared": "workspace:*"
+    "@recruiting-bingo/shared": "0.0.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
