@@ -3,7 +3,11 @@ import type {
   CreateRoomResponse,
   GetRoomResponse,
   JoinRoomRequest,
-  JoinRoomResponse
+  JoinRoomResponse,
+  MarkCellRequest,
+  MarkCellResponse,
+  RequestBingoRequest,
+  RequestBingoResponse
 } from "@recruiting-bingo/shared";
 
 async function handleResponse<T>(response: Response): Promise<T> {
@@ -55,4 +59,33 @@ export async function joinRoom(roomId: string, payload: JoinRoomRequest): Promis
   });
 
   return handleResponse<JoinRoomResponse>(response);
+}
+
+export async function markCell(roomId: string, payload: MarkCellRequest): Promise<MarkCellResponse> {
+  const response = await fetch(`/api/rooms/${encodeURIComponent(roomId)}/mark`, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  return handleResponse<MarkCellResponse>(response);
+}
+
+export async function requestBingo(
+  roomId: string,
+  payload: RequestBingoRequest
+): Promise<RequestBingoResponse> {
+  const response = await fetch(`/api/rooms/${encodeURIComponent(roomId)}/bingo`, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  return handleResponse<RequestBingoResponse>(response);
 }

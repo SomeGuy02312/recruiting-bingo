@@ -26,3 +26,23 @@ export interface JoinRoomResponse {
 export interface GetRoomResponse {
   room: RoomState;
 }
+
+export interface MarkCellRequest {
+  playerId: string;
+  index: number;
+  value: boolean;
+}
+
+export interface MarkCellResponse {
+  room: RoomState;
+}
+
+export interface RequestBingoRequest {
+  playerId: string;
+}
+
+export interface RequestBingoResponse {
+  room: RoomState;
+  winnerConfirmed: boolean;
+  winnerIndex?: number;
+}

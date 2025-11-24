@@ -23,3 +23,7 @@ export function getPlayer(roomId: string): StoredPlayer | null {
     return null;
   }
 }
+
+export function clearPlayer(roomId: string) {
+  storage?.removeItem(`${PREFIX}:${roomId}`);
+}

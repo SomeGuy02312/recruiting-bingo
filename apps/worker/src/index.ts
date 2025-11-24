@@ -1,7 +1,6 @@
 import type { Env } from "./env";
 import { handleRooms } from "./handlers/rooms";
 import { handleStats } from "./handlers/stats";
-import { handleWebsocket } from "./handlers/websocket";
 export { RoomDurableObject } from "./room-do";
 
 const worker = {
@@ -15,10 +14,6 @@ const worker = {
 
     if (pathname === "/api/stats") {
       return handleStats(request, env);
-    }
-
-    if (pathname.startsWith("/ws/rooms")) {
-      return handleWebsocket(request, env);
     }
 
     return new Response("Not Found", { status: 404 });

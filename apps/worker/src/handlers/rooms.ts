@@ -3,7 +3,11 @@ import {
   type CreateRoomResponse,
   type GetRoomResponse,
   type JoinRoomRequest,
-  type JoinRoomResponse
+  type JoinRoomResponse,
+  type MarkCellRequest,
+  type MarkCellResponse,
+  type RequestBingoRequest,
+  type RequestBingoResponse
 } from "@recruiting-bingo/shared";
 import type { Env } from "../env";
 
@@ -97,6 +101,32 @@ export async function handleRooms(request: Request, env: Env): Promise<Response>
         return response;
       }
       const data = (await response.json()) as JoinRoomResponse;
+      return jsonResponse(data);
+    }
+
+    if (segments.length === 4 && segments[3] === "mark" && request.method === "POST") {
+      const payload = await parseJson<MarkCellRequest>(request);
+      const response = await callRoomDurableObject(env, roomId, "/mark", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        return response;
+      }
+      const data = (await response.json()) as MarkCellResponse;
+      return jsonResponse(data);
+    }
+
+    if (segments.length === 4 && segments[3] === "bingo" && request.method === "POST") {
+      const payload = await parseJson<RequestBingoRequest>(request);
+      const response = await callRoomDurableObject(env, roomId, "/bingo", {
+        method: "POST",
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        return response;
+      }
+      const data = (await response.json()) as RequestBingoResponse;
       return jsonResponse(data);
     }
 
