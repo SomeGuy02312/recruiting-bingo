@@ -13,6 +13,7 @@ export interface RoomSettings {
 
 export interface RoomState {
   roomId: string;
+  roomName?: string | null;
   card: string[];
   createdAt: string;
   lastActivityAt: string;

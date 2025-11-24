@@ -149,6 +149,7 @@ export class RoomDurableObject {
   async createRoom(request: CreateRoomRequest, roomId: string): Promise<{ room: RoomState; playerId: string }> {
     const creatorName = this.normalizeName(request.creatorName);
     const creatorColor = request.creatorColor.trim();
+    const roomName = request.roomName?.trim() || null;
     const library = getDefaultRecruitingLibrary();
     const hasCustomEntries = (request.customEntries ?? []).some(
       (entry) => typeof entry === "string" && entry.trim().length > 0
@@ -171,6 +172,7 @@ export class RoomDurableObject {
 
     const room: RoomState = {
       roomId,
+      roomName,
       card,
       createdAt: now,
       lastActivityAt: now,

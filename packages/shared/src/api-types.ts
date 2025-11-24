@@ -3,6 +3,7 @@ import type { RoomState } from "./state";
 export interface CreateRoomRequest {
   creatorName: string;
   creatorColor: string;
+  roomName?: string;
   customEntries?: (string | null | undefined)[];
   stopAtFirstWinner?: boolean;
 }
