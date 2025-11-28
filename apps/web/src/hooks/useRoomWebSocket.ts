@@ -19,18 +19,15 @@ export function useRoomWebSocket(
     setStatus("connecting");
     const origin = window.location.origin.replace(/^http/, (match) => (match === "https" ? "wss" : "ws"));
     const url = `${origin.replace(/\/$/, "")}/ws/rooms/${roomId}`;
-    console.log("Opening room WebSocket", url);
 
     const socket = new WebSocket(url);
     socketRef.current = socket;
 
     const handleOpen = () => {
-      console.log("WebSocket open");
       setStatus("open");
     };
 
     const handleMessage = (event: MessageEvent) => {
-      console.log("WebSocket message:", event.data);
       try {
         const data = JSON.parse(event.data as string) as ServerMessage;
         onMessage(data);
@@ -40,12 +37,10 @@ export function useRoomWebSocket(
     };
 
     const handleClose = () => {
-      console.log("WebSocket closed");
       setStatus("closed");
     };
 
     const handleError = () => {
-      console.log("WebSocket error");
       setStatus("error");
     };
 

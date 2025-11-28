@@ -15,6 +15,7 @@ export interface RoomState {
   roomId: string;
   roomName?: string | null;
   card: string[];
+  customSquares?: string[];
   createdAt: string;
   lastActivityAt: string;
   endedAt?: string | null;

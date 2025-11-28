@@ -130,7 +130,7 @@ export function WinnerPage() {
   const endedAt = room?.endedAt ? new Date(room.endedAt) : null;
   const completionDate = endedAt ?? createdAt ?? null;
   const duration = createdAt ? (endedAt ? endedAt.getTime() : Date.now()) - createdAt.getTime() : null;
-  const formattedNaturalDate = completionDate ? formatDateWithOrdinal(completionDate) : null;
+  const formattedNaturalDate = completionDate ? formatDateWithOrdinal(completionDate) : "an unknown date";
   const completionSummaryTimestamp = completionDate
     ? `${completionDate.toLocaleTimeString("en-US", {
         hour: "numeric",
@@ -145,7 +145,7 @@ export function WinnerPage() {
       winnerName: player.name,
       formattedDuration: durationLabel ?? "—",
       formattedEndTime: completionSummaryTimestamp ?? "—",
-      formattedNaturalDate: formattedNaturalDate ?? "an unknown date",
+      formattedNaturalDate,
       customRoomName: room?.roomName?.trim() || undefined,
     });
   }, [player, durationLabel, completionSummaryTimestamp, formattedNaturalDate, room?.roomName]);
@@ -213,11 +213,19 @@ export function WinnerPage() {
           {isLoading ? (
             <p className={messageTextClass}>Loading winner details…</p>
           ) : error ? (
-            <div className={isDark ? "rounded-lg border border-rose-500/60 bg-rose-900/40 p-4 text-rose-100" : "rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-700"}>
-              {error}
+            <div className={`${isDark ? "rounded-lg border border-rose-500/60 bg-rose-900/40 p-4 text-rose-100" : "rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-700"} space-y-3`}>
+              <p>{error}</p>
+              <Link to="/" className="text-sm font-semibold text-sky-600 underline-offset-4 hover:underline">
+                Return to the landing page
+              </Link>
             </div>
           ) : !room ? (
-            <p className={messageTextClass}>No room data available.</p>
+            <div className="space-y-3">
+              <p className={messageTextClass}>No room data available.</p>
+              <Link to="/" className="text-sm font-semibold text-sky-600 underline-offset-4 hover:underline">
+                Start a new game
+              </Link>
+            </div>
           ) : !player ? (
             <p className={isDark ? "text-slate-300" : "text-slate-600"}>This player is not part of this game.</p>
           ) : (
@@ -345,20 +353,23 @@ export function WinnerPage() {
                   </div>
                 </section>
                 <aside className="w-72 shrink-0">
-                  <div className="rounded-3xl border border-slate-200 bg-white p-3 text-left shadow-lg dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100">
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">Leaderboard</h3>
+                  <div className={leaderboardCardClass}>
+                    <h3 className={leaderboardHeaderClass}>Leaderboard</h3>
                     {leaderboard.length ? (
                       <ul className="mt-3 space-y-1.5 text-sm">
                         {leaderboard.map((entry, index) => {
                           const isCurrentWinner = entry.playerId === player.playerId;
+                          const itemClass = isCurrentWinner
+                            ? isDark
+                              ? "bg-amber-500/25 font-semibold text-amber-100"
+                              : "bg-amber-200/50 font-semibold text-slate-900"
+                            : isDark
+                            ? "bg-slate-800/80 text-slate-200"
+                            : "bg-slate-100/70 text-slate-700";
                           return (
                             <li
                               key={entry.playerId}
-                              className={`flex items-center justify-between rounded-xl px-3 py-2 ${
-                                isCurrentWinner
-                                  ? "bg-amber-200/50 font-semibold text-slate-900 dark:bg-amber-200/70 dark:text-slate-900"
-                                  : "bg-slate-100/70 text-slate-700 dark:bg-slate-800/70 dark:text-slate-100"
-                              }`}
+                              className={`flex items-center justify-between rounded-xl px-3 py-2 ${itemClass}`}
                             >
                               <div className="flex items-center gap-2">
                                 <span className="text-xs font-semibold uppercase text-slate-500 dark:text-slate-300">{index + 1}.</span>

@@ -96,19 +96,16 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
     : isDark
     ? "border border-slate-700 bg-slate-900/70 shadow-xl"
     : "border border-slate-200 bg-white shadow-md";
-  const headerWrapperClass = isDark
-    ? `grid grid-cols-5 gap-[1px] rounded-t-2xl bg-slate-900/70 ${isPreview ? "p-0.5 pb-0" : "p-1 pb-0"}`
-    : `grid grid-cols-5 gap-[1px] rounded-t-2xl bg-slate-100 ${isPreview ? "p-0.5 pb-0" : "p-1 pb-0"}`;
-  const headerCellClass = isDark
-    ? `flex items-center justify-center rounded-t-xl border border-slate-700/80 border-b-4 border-b-sky-400/70 bg-slate-900/70 text-center font-bold tracking-[0.35em] text-slate-50 ${
-        isPreview ? "min-h-[28px] text-sm sm:text-base" : "min-h-[48px] text-2xl sm:text-[1.65rem]"
-      }`
-    : `flex items-center justify-center rounded-t-xl border border-slate-200 border-b-4 border-b-sky-500/70 bg-white text-center font-bold tracking-[0.35em] text-slate-800 ${
-        isPreview ? "min-h-[28px] text-sm sm:text-base" : "min-h-[48px] text-2xl sm:text-[1.65rem]"
-      }`;
+  const headerContainerClass = `rounded-t-2xl bg-gradient-to-r from-sky-500 via-violet-500 to-pink-500 ${
+    isPreview ? "px-2 pt-2 pb-1" : "px-4 pt-3 pb-2"
+  }`;
+  const headerGridClass = `grid grid-cols-5 gap-2 text-center font-bold tracking-[0.35em] text-white ${
+    isPreview ? "text-sm" : "text-2xl sm:text-[1.65rem]"
+  }`;
+  const bodyWrapperClass = isPreview ? "px-2 pb-2 pt-1" : "px-4 pb-4 pt-3";
   const gridContainerClass = isDark
-    ? `grid grid-cols-5 rounded-b-2xl bg-slate-900/40 ${isPreview ? "gap-0.5 p-1 pt-0" : "gap-1 p-1 pt-0"}`
-    : `grid grid-cols-5 rounded-b-2xl bg-slate-50 ${isPreview ? "gap-0.5 p-1 pt-0" : "gap-1 p-1 pt-0"}`;
+    ? `grid grid-cols-5 rounded-b-2xl bg-slate-900/40 ${isPreview ? "gap-0.5" : "gap-1"}`
+    : `grid grid-cols-5 rounded-b-2xl bg-slate-50 ${isPreview ? "gap-0.5" : "gap-1"}`;
 
   const baseTextClass = isDark ? "text-slate-50" : "text-slate-900";
   const unmarkedClasses = isDark ? "bg-slate-900/90 border-slate-700" : "bg-white border-slate-200";
@@ -122,15 +119,18 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
 
   return (
     <section className={`w-full max-w-2xl rounded-2xl p-1 backdrop-blur sm:p-2 ${cardWrapperClasses} ${textTone}`}>
-      <div className={headerWrapperClass}>
-        {LETTERS.map((letter) => (
-          <div key={letter} className={headerCellClass}>
-            {letter}
-          </div>
-        ))}
+      <div className={headerContainerClass}>
+        <div className={headerGridClass}>
+          {LETTERS.map((letter) => (
+            <div key={letter} className="flex items-center justify-center">
+              {letter}
+            </div>
+          ))}
+        </div>
       </div>
-      <div className={`${gridContainerClass} text-xs font-semibold sm:text-sm`}>
-        {card.map((entry, index) => {
+      <div className={bodyWrapperClass}>
+        <div className={`${gridContainerClass} text-xs font-semibold sm:text-sm`}>
+          {card.map((entry, index) => {
           const isMarked = Boolean(marked[index]);
           const dabColor = playerColor ?? palette.primary.base;
           const baseStyles = `${baseCellClasses} ${isMarked ? markedClasses : unmarkedClasses}`;
@@ -183,6 +183,7 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
             </div>
           );
         })}
+        </div>
       </div>
     </section>
   );

@@ -26,6 +26,12 @@ export function PageShell({ children }: PropsWithChildren) {
             Recruiting Bingo
           </Link>
           <div className="flex items-center gap-3">
+            <Link
+              to="/about"
+              className={isDark ? "text-sm font-medium text-slate-200 hover:text-sky-300" : "text-sm font-medium text-slate-700 hover:text-sky-600"}
+            >
+              About & FAQ
+            </Link>
             <span className={betaClass}>beta</span>
             <button type="button" onClick={toggle} className={toggleClass}>
               {isDark ? "Dark · 🌙" : "Light · ☀︎"}

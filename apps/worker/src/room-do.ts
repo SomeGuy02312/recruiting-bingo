@@ -151,11 +151,19 @@ export class RoomDurableObject {
     const creatorColor = request.creatorColor.trim();
     const roomName = request.roomName?.trim() || null;
     const library = getDefaultRecruitingLibrary();
-    const hasCustomEntries = (request.customEntries ?? []).some(
-      (entry) => typeof entry === "string" && entry.trim().length > 0
-    );
+    const trimmedCustomSquares =
+      Array.isArray(request.customSquares) && request.customSquares.length === CARD_SIZE
+        ? request.customSquares.map((entry) => (entry ?? "").trim())
+        : null;
+    const hasValidCustomSquares = trimmedCustomSquares?.every((entry) => entry.length > 0) ?? false;
 
-    const card = hasCustomEntries
+    const hasCustomEntries = !hasValidCustomSquares
+      ? (request.customEntries ?? []).some((entry) => typeof entry === "string" && entry.trim().length > 0)
+      : false;
+
+    const card = hasValidCustomSquares
+      ? trimmedCustomSquares!
+      : hasCustomEntries
       ? buildCardFromCustomInputs(request.customEntries ?? [], library)
       : generateRandomCard(library, CARD_SIZE);
 
@@ -174,6 +182,7 @@ export class RoomDurableObject {
       roomId,
       roomName,
       card,
+      customSquares: hasValidCustomSquares ? card : undefined,
       createdAt: now,
       lastActivityAt: now,
       endedAt: null,

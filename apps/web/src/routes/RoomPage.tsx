@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { hasBingo, type RoomState } from "@recruiting-bingo/shared";
 import { PageShell } from "../components/layout/PageShell";
 import { BingoCard } from "../components/BingoCard";
@@ -120,13 +120,7 @@ export function RoomPage() {
   const sidebarCardClass = isDark
     ? "rounded-2xl border border-slate-700 bg-slate-900/80 p-4 shadow-md"
     : "rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm";
-  const inviteCardClass = isDark
-    ? "rounded-2xl border border-slate-700 bg-slate-900/80 p-3 shadow-md"
-    : "rounded-2xl border border-slate-200 bg-white/80 p-3 shadow-sm";
   const infoPanelClass = sidebarCardClass;
-  const leaderboardCardClass = isDark
-    ? "rounded-2xl border border-slate-700 bg-slate-900/80 p-5 text-slate-100 shadow-xl"
-    : "rounded-2xl border border-slate-200 bg-white/90 p-5 text-slate-900 shadow-xl";
   const inputClass = isDark
     ? "mt-1 w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-base text-slate-100 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/40"
     : "mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500/40";
@@ -357,13 +351,23 @@ export function RoomPage() {
     }
     if (error) {
       return (
-        <div className={errorCardClass}>
+        <div className={`${errorCardClass} space-y-3`}>
           <p>{error}</p>
+          <Link to="/" className="text-sm font-semibold text-sky-600 underline-offset-4 hover:underline">
+            Go back home
+          </Link>
         </div>
       );
     }
     if (!room) {
-      return <p className={messageTextClass}>This room could not be loaded. It may have expired.</p>;
+      return (
+        <div className="space-y-3">
+          <p className={messageTextClass}>This room could not be loaded. It may have expired.</p>
+          <Link to="/" className="text-sm font-semibold text-sky-600 underline-offset-4 hover:underline">
+            Create a new game
+          </Link>
+        </div>
+      );
     }
 
     return (
@@ -455,39 +459,12 @@ export function RoomPage() {
         </div>
 
         <aside className="flex w-full flex-shrink-0 flex-col gap-4 md:w-80">
-          <div className={infoPanelClass}>
-            <p className={isDark ? "text-xs uppercase tracking-[0.25em] text-slate-400" : "text-xs uppercase tracking-[0.25em] text-slate-500"}>
-              Room
-            </p>
-            <h2 className={isDark ? "mt-1 text-xl font-semibold text-slate-50" : "mt-1 text-xl font-semibold text-slate-900"}>
-              {room.roomName ? room.roomName : `Room ${room.roomId}`}
-            </h2>
-            <p className={mutedTextClass}>Room ID: {room.roomId}</p>
-            <p className={isDark ? "mt-2 text-xs text-slate-400" : "mt-2 text-xs text-slate-600"}>
-              {room.settings.stopAtFirstWinner
-                ? "Ends when the first winner is confirmed"
-                : "Keeps going after the first winner"}
-            </p>
-            {player ? (
-              <p className={isDark ? "mt-2 text-sm text-slate-300" : "mt-2 text-sm text-slate-600"}>
-                You are playing as <span className={isDark ? "font-semibold text-slate-50" : "font-semibold text-slate-900"}>{player.name}</span>
-              </p>
-            ) : null}
-            {room.endedAt ? (
-              <p className={mutedTextClass}>Game ended at {new Date(room.endedAt).toLocaleString()}</p>
-            ) : (
-              <p className={mutedTextClass}>
-                Live sync: polling every few seconds
-                {lastUpdated ? ` · Updated ${new Date(lastUpdated).toLocaleTimeString()}` : ""}
-              </p>
-            )}
-          </div>
-
-          {inviteUrl ? (
-            <div className={inviteCardClass}>
-              <p className={isDark ? "text-xs text-slate-300" : "text-xs text-slate-600"}>Share this room link to invite teammates.</p>
+          {inviteUrl && (!room.settings.stopAtFirstWinner || !room.endedAt) ? (
+            <div className="rounded-2xl border border-sky-100 bg-sky-50/80 px-4 py-3 text-slate-900 shadow-sm dark:border-slate-600 dark:bg-slate-900/40 dark:text-slate-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600 dark:text-sky-300">Share this room</p>
+              <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">Send this link to invite teammates into your game.</p>
               <div className="mt-2 flex items-center gap-2">
-                <code className={isDark ? "flex-1 truncate rounded-md bg-slate-800 px-2 py-1 text-xs text-slate-200" : "flex-1 truncate rounded-md bg-slate-100 px-2 py-1 text-xs text-slate-700"}>
+                <code className="flex-1 truncate rounded-md bg-white/80 px-2 py-1 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-100">
                   {inviteUrl}
                 </code>
                 <button
@@ -500,12 +477,51 @@ export function RoomPage() {
               </div>
               {copiedInvite ? <p className="mt-1 text-[11px] text-emerald-500">Link copied!</p> : null}
             </div>
+          ) : inviteUrl && room.settings.stopAtFirstWinner && room.endedAt ? (
+            <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-300">Game finished</p>
+              <p className="mt-1 text-sm text-slate-700 dark:text-slate-200">This room ended after the first winner. Want to start another round?</p>
+              <Link
+                to="/"
+                className="mt-3 inline-flex items-center justify-center rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-400"
+              >
+                Create a new game
+              </Link>
+            </div>
           ) : null}
 
-          <div className={leaderboardCardClass}>
-            <h3 className={isDark ? "text-lg font-semibold text-slate-50" : "text-lg font-semibold text-slate-900"}>Leaderboard</h3>
+          <div className={infoPanelClass}>
+            <h2 className={isDark ? "text-sm font-semibold text-slate-50" : "text-sm font-semibold text-slate-900"}>
+              {room.roomName ? room.roomName : `Room ${room.roomId}`}
+            </h2>
+            <p className={isDark ? "mt-0.5 text-[11px] text-slate-400" : "mt-0.5 text-[11px] text-slate-500"}>Room ID: {room.roomId}</p>
+            <p className={isDark ? "mt-1 text-xs text-slate-300" : "mt-1 text-xs text-slate-600"}>
+              {room.settings.stopAtFirstWinner
+                ? "Ends when the first winner is confirmed"
+                : "Keeps going after the first winner"}
+            </p>
+            {player ? (
+              <p className={isDark ? "mt-2 text-sm text-slate-200" : "mt-2 text-sm text-slate-700"}>
+                You&apos;re playing as <span className="font-semibold">{player.name}</span>
+              </p>
+            ) : null}
+            {room.endedAt ? (
+              <p className={isDark ? "mt-1 text-[10px] text-slate-500" : "mt-1 text-[10px] text-slate-400"}>
+                Game ended at {new Date(room.endedAt).toLocaleString()}
+              </p>
+            ) : (
+              <p className={isDark ? "mt-1 text-[10px] text-slate-500" : "mt-1 text-[10px] text-slate-400"}>
+                Live sync: polling every few seconds
+                {lastUpdated ? ` · Updated ${new Date(lastUpdated).toLocaleTimeString()}` : ""}
+              </p>
+            )}
+
+            <div className="mt-3 border-t border-slate-200 pt-3 dark:border-slate-700" />
+            <h3 className={isDark ? "text-xs font-semibold uppercase tracking-[0.25em] text-slate-400" : "text-xs font-semibold uppercase tracking-[0.25em] text-slate-500"}>
+              Leaderboard
+            </h3>
             {leaderboard.length ? (
-              <ul className="mt-3 space-y-2 text-sm">
+              <ul className="mt-2 space-y-2 text-sm">
                 {leaderboard.map((entry) => {
                   const isCurrent = entry.playerId === player?.playerId;
                   const itemClass = isCurrent
@@ -524,7 +540,7 @@ export function RoomPage() {
                           <span
                             className={
                               isDark
-                                ? "rounded-full bg-amber-400 px-2 py-0.5 text-xs font-semibold text-slate-900"
+                                ? "rounded-full bg-amber-400/90 px-2 py-0.5 text-xs font-semibold text-slate-900"
                                 : "rounded-full bg-amber-300 px-2 py-0.5 text-xs font-semibold text-slate-900"
                             }
                           >
@@ -540,7 +556,7 @@ export function RoomPage() {
                 })}
               </ul>
             ) : (
-              <p className={isDark ? "mt-3 text-sm text-slate-400" : "mt-3 text-sm text-slate-600"}>No players yet.</p>
+              <p className={isDark ? "mt-2 text-sm text-slate-400" : "mt-2 text-sm text-slate-600"}>No players yet.</p>
             )}
           </div>
         </aside>

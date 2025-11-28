@@ -5,6 +5,7 @@ export interface CreateRoomRequest {
   creatorColor: string;
   roomName?: string;
   customEntries?: (string | null | undefined)[];
+  customSquares?: string[];
   stopAtFirstWinner?: boolean;
 }
 
