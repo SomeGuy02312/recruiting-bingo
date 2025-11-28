@@ -1,18 +1,39 @@
 import { Link } from "react-router-dom";
 import type { PropsWithChildren } from "react";
+import { useThemeMode } from "../../theme/theme-context";
 
 export function PageShell({ children }: PropsWithChildren) {
+  const { mode, toggle } = useThemeMode();
+  const isDark = mode === "dark";
+
+  const headerClass = isDark
+    ? "border-b border-slate-800 bg-slate-900/80 text-slate-50 backdrop-blur"
+    : "border-b border-slate-200 bg-white/80 text-slate-900 backdrop-blur";
+
+  const toggleClass = isDark
+    ? "inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-xs font-medium text-slate-100 hover:border-sky-400"
+    : "inline-flex items-center gap-1 rounded-full border border-slate-300 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700 hover:border-sky-400";
+
+  const betaClass = isDark ? "text-xs uppercase tracking-[0.3em] text-slate-400" : "text-xs uppercase tracking-[0.3em] text-slate-500";
+  const brandClass = isDark ? "text-lg font-semibold tracking-tight text-slate-50" : "text-lg font-semibold tracking-tight text-slate-900";
+  const shellClass = isDark ? "text-slate-100" : "text-slate-900";
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="border-b border-slate-200 bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <Link to="/" className="text-lg font-semibold tracking-tight text-slate-900">
+    <div className={shellClass}>
+      <header className={headerClass}>
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
+          <Link to="/" className={brandClass}>
             Recruiting Bingo
           </Link>
-          <span className="text-xs uppercase tracking-[0.3em] text-slate-400">beta</span>
+          <div className="flex items-center gap-3">
+            <span className={betaClass}>beta</span>
+            <button type="button" onClick={toggle} className={toggleClass}>
+              {isDark ? "Dark · 🌙" : "Light · ☀︎"}
+            </button>
+          </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl px-6 py-10">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
     </div>
   );
 }

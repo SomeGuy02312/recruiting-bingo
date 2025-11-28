@@ -11,5 +11,9 @@
     "dev:worker": "npm --workspace apps/worker run dev",
     "build:web": "npm --workspace apps/web run build",
     "deploy:worker": "npm --workspace apps/worker run deploy"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^0.555.0"
   }
 }
