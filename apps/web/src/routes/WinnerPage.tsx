@@ -167,13 +167,6 @@ export function WinnerPage() {
       });
   }, [player, room, cardImageUrl]);
 
-  const handleShareClick = () => {
-    if (!canShare || !shareUrl) return;
-    const linkedInShareUrl =
-      "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(shareUrl);
-    window.open(linkedInShareUrl, "_blank", "noopener,noreferrer");
-  };
-
   const handleCopyShare = async () => {
     if (!shareUrl) return;
     try {
@@ -204,6 +197,11 @@ export function WinnerPage() {
     } catch (err) {
       console.error("Unable to download certificate", err);
     }
+  };
+
+  const shareOnLinkedIn = () => {
+    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://bingo.hiregear.us")}`;
+    window.open(linkedInUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -258,7 +256,7 @@ export function WinnerPage() {
                       </button>
                       <button
                         type="button"
-                        onClick={handleShareClick}
+                        onClick={shareOnLinkedIn}
                         className="rounded-full border border-white/80 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                       >
                         Share on LinkedIn
