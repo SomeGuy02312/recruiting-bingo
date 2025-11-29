@@ -1,7 +1,7 @@
 /// <reference types="@cloudflare/workers-types" />
 
 export interface Env {
-  ROOM_DO: DurableObjectNamespace;
+  ROOMS: DurableObjectNamespace;
   STATS_KV: KVNamespace;
   ASSETS: Fetcher;
 }

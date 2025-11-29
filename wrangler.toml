@@ -1,6 +1,6 @@
-name = "recruiting-bingo"
+name = "bingo"
 main = "apps/worker/src/index.ts"
-compatibility_date = "2024-05-01"
+compatibility_date = "2025-11-29"
 
 [assets]
 directory = "apps/web/dist"
@@ -8,14 +8,19 @@ binding = "ASSETS"
 
 [durable_objects]
 bindings = [
-  { name = "ROOM_DO", class_name = "RoomDurableObject" }
+  { name = "ROOMS", class_name = "RoomDurableObject" }
 ]
 
 [[migrations]]
 tag = "v1"
-new_classes = ["RoomDurableObject"]
+new_sqlite_classes = ["RoomDurableObject"]
 
 [env.production]
 routes = [
   { pattern = "bingo.hiregear.us/*", zone_name = "hiregear.us" }
+]
+
+[env.production.durable_objects]
+bindings = [
+  { name = "ROOMS", class_name = "RoomDurableObject" }
 ]

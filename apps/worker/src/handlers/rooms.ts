@@ -37,8 +37,8 @@ async function parseJson<T>(request: Request): Promise<T> {
 const createRoomId = () => crypto.randomUUID().replace(/-/g, "").slice(0, 12);
 
 async function callRoomDurableObject(env: Env, roomId: string, path: string, init?: RequestInit) {
-  const id = env.ROOM_DO.idFromName(roomId);
-  const stub = env.ROOM_DO.get(id);
+  const id = env.ROOMS.idFromName(roomId);
+  const stub = env.ROOMS.get(id);
   const target = new URL(`https://room${path}`);
   return stub.fetch(
     new Request(target.toString(), {
