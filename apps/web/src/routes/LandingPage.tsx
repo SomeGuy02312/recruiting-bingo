@@ -290,15 +290,27 @@ export function LandingPage() {
 
           <div id="how-it-works" className="space-y-4">
             <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-50">How to play Recruiting Bingo</h2>
-            <ol className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
-              <li className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 dark:border-slate-700 dark:bg-slate-900/70">
-                <span className="font-semibold text-slate-900 dark:text-slate-50">1. Host creates a room.</span> Name the room, pick your color, and decide whether to end at the first winner or keep rolling.
+            <ol className="space-y-4 text-left">
+              <li className="flex flex-col gap-1 text-lg font-semibold text-slate-900 dark:text-white">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-sky-500 dark:text-sky-300">Step 1</span>
+                <span className="text-2xl text-sky-600 dark:text-sky-300">Host creates a room</span>
+                <p className="text-base font-normal text-slate-700 dark:text-slate-300">
+                  Name the room, pick your color, decide whether to end at the first winner or keep rolling—then hit create.
+                </p>
               </li>
-              <li className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 dark:border-slate-700 dark:bg-slate-900/70">
-                <span className="font-semibold text-slate-900 dark:text-slate-50">2. Share the link.</span> Teammates join from any modern browser — no logins or downloads.
+              <li className="flex flex-col gap-1 text-lg font-semibold text-slate-900 dark:text-white">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-violet-500 dark:text-violet-300">Step 2</span>
+                <span className="text-2xl text-violet-500 dark:text-violet-300">Share the link</span>
+                <p className="text-base font-normal text-slate-700 dark:text-slate-300">
+                  Drop the invite URL in Slack or Zoom. Teammates join from any modern browser—no logins, no installs.
+                </p>
               </li>
-              <li className="rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 dark:border-slate-700 dark:bg-slate-900/70">
-                <span className="font-semibold text-slate-900 dark:text-slate-50">3. Play live.</span> Mark squares as real recruiting highs and lows happen. Celebrate the first person to call bingo (or keep going for more winners).
+              <li className="flex flex-col gap-1 text-lg font-semibold text-slate-900 dark:text-white">
+                <span className="text-xs font-semibold uppercase tracking-[0.4em] text-pink-500 dark:text-pink-300">Step 3</span>
+                <span className="text-2xl text-pink-500 dark:text-pink-300">Play live</span>
+                <p className="text-base font-normal text-slate-700 dark:text-slate-300">
+                  Mark squares as real recruiting highs and lows happen. Celebrate the first person to call bingo—or keep going for more winners.
+                </p>
               </li>
             </ol>
           </div>
