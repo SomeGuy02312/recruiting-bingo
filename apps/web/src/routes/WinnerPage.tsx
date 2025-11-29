@@ -97,7 +97,7 @@ export function WinnerPage() {
   }, [room, playerId]);
 
   const isWinner = winnerIndex >= 0;
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "https://bingo.hiregear.us";
   const fromGameFlow = Boolean((location.state as { fromGame?: boolean } | null)?.fromGame);
   const canShare = Boolean(isWinner && player && room && shareUrl && fromGameFlow);
   const leaderboardCardClass = [
@@ -199,7 +199,10 @@ export function WinnerPage() {
   };
 
   const shareOnLinkedIn = () => {
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://bingo.hiregear.us")}`;
+    if (!shareUrl) return;
+    // Share the exact winner page URL so LinkedIn posts point to this game instance.
+    const linkedInUrl =
+      `https://www.linkedin.com/feed/share?mini=true&url=${encodeURIComponent(shareUrl)}&utm_source=recruiting-bingo&utm_medium=winner-share`;
     window.open(linkedInUrl, "_blank", "noopener,noreferrer");
   };
 
