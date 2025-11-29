@@ -1,4 +1,4 @@
-name = "bingo"
+name = "recruiting-bingo"
 main = "apps/worker/src/index.ts"
 compatibility_date = "2025-11-29"
 
