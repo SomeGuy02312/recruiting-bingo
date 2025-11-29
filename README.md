@@ -25,7 +25,7 @@ Players get automatic Bingo detection, real-time winner announcements, and firew
 
 No accounts. No logins. No tracking. Just a delightful little game.
 
-**Try it at bingo.hiregear.us
+**Try it at [https://bingo.hiregear.us](https://bingo.hiregear.us)**
 
 ---
 
