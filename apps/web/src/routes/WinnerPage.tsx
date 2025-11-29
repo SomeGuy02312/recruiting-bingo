@@ -8,6 +8,7 @@ import { getRoom } from "../lib/api";
 import html2canvas from "html2canvas";
 import { getRandomCertificateSummary } from "../utils/certificateCopy";
 import { Download } from "lucide-react";
+import { WinnerCertificate } from "../components/WinnerCertificate";
 
 function formatDuration(ms: number) {
   if (Number.isNaN(ms) || ms <= 0) return "—";
@@ -310,58 +311,12 @@ export function WinnerPage() {
 
               <div className="mt-1 mx-auto flex max-w-6xl items-start gap-6">
                 <section className="flex-1">
-                  <div
-                    ref={certificateRef}
-                    className="bg-[#fdf4e4] rounded-3xl border border-[#f1e1c5] shadow-[0_18px_40px_rgba(15,23,42,0.18)] px-6 py-4 flex flex-col items-center text-center"
-                  >
-                    <header className="flex flex-col items-center text-center">
-                      <div className="mb-0.5 flex justify-center text-3xl">🏆</div>
-                      <p className="mb-0.5 text-[11px] uppercase tracking-[0.22em] text-slate-500">RECRUITING BINGO CHAMPION</p>
-                      <h1 className="mb-0.5 text-3xl font-semibold text-slate-900">{player.name} is the winner!</h1>
-                      <p className="mb-2 text-base text-slate-600">Awarded for surviving another recruiting cycle.</p>
-                    </header>
-
-                    <div className="mt-4 flex w-full flex-col items-center gap-4">
-                      {cardImageUrl ? (
-                        <div className="flex justify-center">
-                          <div
-                            className="inline-flex rounded-2xl border border-slate-200 bg-white px-3 py-3 shadow-[0_16px_35px_rgba(15,23,42,0.22)]"
-                            style={{
-                              transform:
-                                "perspective(900px) rotateX(18deg) rotateZ(8deg) translateY(-4px)",
-                              transformOrigin: "center",
-                            }}
-                          >
-                            <img
-                              src={cardImageUrl}
-                              alt="Winning Recruiting Bingo card"
-                              className="block h-auto w-[260px] max-w-full rounded-xl"
-                            />
-                          </div>
-                        </div>
-                      ) : null}
-
-                      {summaryLine ? (
-                        <p className="mt-3 max-w-xl text-center text-base text-slate-700 mx-auto">
-                          {summaryLine}
-                        </p>
-                      ) : null}
-                      <div className="mt-3 w-full border-t border-[#f0ddbf] pt-2">
-                        <p className="text-center text-sm text-slate-500">
-                          Play free at{" "}
-                          <a
-                            href="https://bingo.hiregear.us"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-medium text-slate-700 underline-offset-2 hover:underline"
-                          >
-                            bingo.hiregear.us
-                          </a>
-                          .
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <WinnerCertificate
+                    winnerName={player.name}
+                    summaryLine={summaryLine}
+                    cardImageUrl={cardImageUrl}
+                    certificateRef={certificateRef}
+                  />
                 </section>
                 <aside className="w-72 shrink-0">
                   <div className={leaderboardCardClass}>

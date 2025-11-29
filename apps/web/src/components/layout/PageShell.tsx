@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 import type { PropsWithChildren } from "react";
 import { useThemeMode } from "../../theme/theme-context";
 
-export function PageShell({ children }: PropsWithChildren) {
+interface PageShellProps extends PropsWithChildren {
+  hideHeader?: boolean;
+  mainClassName?: string;
+}
+
+export function PageShell({ children, hideHeader = false, mainClassName }: PageShellProps) {
   const { mode, toggle } = useThemeMode();
   const isDark = mode === "dark";
 
@@ -17,29 +22,32 @@ export function PageShell({ children }: PropsWithChildren) {
   const betaClass = isDark ? "text-xs uppercase tracking-[0.3em] text-slate-400" : "text-xs uppercase tracking-[0.3em] text-slate-500";
   const brandClass = isDark ? "text-lg font-semibold tracking-tight text-slate-50" : "text-lg font-semibold tracking-tight text-slate-900";
   const shellClass = isDark ? "text-slate-100" : "text-slate-900";
+  const resolvedMainClass = mainClassName ?? "mx-auto w-full max-w-6xl px-4 py-8";
 
   return (
     <div className={shellClass}>
-      <header className={headerClass}>
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
-          <Link to="/" className={brandClass}>
-            Recruiting Bingo
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link
-              to="/about"
-              className={isDark ? "text-sm font-medium text-slate-200 hover:text-sky-300" : "text-sm font-medium text-slate-700 hover:text-sky-600"}
-            >
-              About & FAQ
+      {!hideHeader ? (
+        <header className={headerClass}>
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3">
+            <Link to="/" className={brandClass}>
+              Recruiting Bingo
             </Link>
-            <span className={betaClass}>beta</span>
-            <button type="button" onClick={toggle} className={toggleClass}>
-              {isDark ? "Dark · 🌙" : "Light · ☀︎"}
-            </button>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/about"
+                className={isDark ? "text-sm font-medium text-slate-200 hover:text-sky-300" : "text-sm font-medium text-slate-700 hover:text-sky-600"}
+              >
+                About & FAQ
+              </Link>
+              <span className={betaClass}>beta</span>
+              <button type="button" onClick={toggle} className={toggleClass}>
+                {isDark ? "Dark · 🌙" : "Light · ☀︎"}
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
+        </header>
+      ) : null}
+      <main className={resolvedMainClass}>{children}</main>
     </div>
   );
 }
