@@ -97,9 +97,12 @@ export function WinnerPage() {
   }, [room, playerId]);
 
   const isWinner = winnerIndex >= 0;
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "https://bingo.hiregear.us";
+  const currentWinnerPageUrl = typeof window !== "undefined" ? window.location.href : "https://bingo.hiregear.us";
+  const baseLinkedInShareUrl = "https://www.linkedin.com/sharing/share-offsite/?url=";
+  const winnerUrlWithUtm = `${currentWinnerPageUrl}${currentWinnerPageUrl.includes("?") ? "&" : "?"}utm_source=recruiting-bingo&utm_medium=winner-share`;
+  const linkedInShareUrl = `${baseLinkedInShareUrl}${encodeURIComponent(winnerUrlWithUtm)}`;
   const fromGameFlow = Boolean((location.state as { fromGame?: boolean } | null)?.fromGame);
-  const canShare = Boolean(isWinner && player && room && shareUrl && fromGameFlow);
+  const canShare = Boolean(isWinner && player && room && currentWinnerPageUrl && fromGameFlow);
   const leaderboardCardClass = [
     "rounded-3xl p-3 text-left shadow-lg",
     isDark ? "border border-slate-700 bg-slate-900/70 text-slate-100" : "border border-slate-200 bg-white text-slate-900",
@@ -167,9 +170,9 @@ export function WinnerPage() {
   }, [player, room, cardImageUrl]);
 
   const handleCopyShare = async () => {
-    if (!shareUrl) return;
+    if (!currentWinnerPageUrl) return;
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(currentWinnerPageUrl);
       setCopiedShare(true);
       setTimeout(() => setCopiedShare(false), 2000);
     } catch (err) {
@@ -199,11 +202,9 @@ export function WinnerPage() {
   };
 
   const shareOnLinkedIn = () => {
-    if (!shareUrl) return;
+    if (!linkedInShareUrl) return;
     // Share the exact winner page URL so LinkedIn posts point to this game instance.
-    const linkedInUrl =
-      `https://www.linkedin.com/feed/share?mini=true&url=${encodeURIComponent(shareUrl)}&utm_source=recruiting-bingo&utm_medium=winner-share`;
-    window.open(linkedInUrl, "_blank", "noopener,noreferrer");
+    window.open(linkedInShareUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
