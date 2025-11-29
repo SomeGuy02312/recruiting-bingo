@@ -54,6 +54,11 @@ export function WinnerPage() {
   const captureRef = useRef<HTMLDivElement | null>(null);
   const certificateRef = useRef<HTMLDivElement | null>(null);
   const [cardImageUrl, setCardImageUrl] = useState<string | null>(null);
+  const [frozenDurationMs, setFrozenDurationMs] = useState<number | null>(null);
+
+  useEffect(() => {
+    setFrozenDurationMs(null);
+  }, [roomId, playerId]);
 
   useEffect(() => {
     if (!roomId || !playerId) {
@@ -141,8 +146,30 @@ export function WinnerPage() {
 
   const createdAt = room?.createdAt ? new Date(room.createdAt) : null;
   const endedAt = room?.endedAt ? new Date(room.endedAt) : null;
+
+  useEffect(() => {
+    if (!createdAt || !roomId || !playerId || frozenDurationMs !== null) return;
+    const storageKey = `winner-duration:${roomId}:${playerId}`;
+    if (typeof window !== "undefined") {
+      const stored = window.localStorage.getItem(storageKey);
+      if (stored) {
+        const parsed = Number(stored);
+        if (!Number.isNaN(parsed)) {
+          setFrozenDurationMs(parsed);
+          return;
+        }
+      }
+    }
+    const startMs = createdAt.getTime();
+    const endMs = endedAt ? endedAt.getTime() : Date.now();
+    const durationMs = Math.max(endMs - startMs, 0);
+    setFrozenDurationMs(durationMs);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(storageKey, String(durationMs));
+    }
+  }, [createdAt, endedAt, frozenDurationMs, roomId, playerId]);
+
   const completionDate = endedAt ?? createdAt ?? null;
-  const duration = createdAt ? (endedAt ? endedAt.getTime() : Date.now()) - createdAt.getTime() : null;
   const formattedNaturalDate = completionDate ? formatDateWithOrdinal(completionDate) : "an unknown date";
   const completionSummaryTimestamp = completionDate
     ? `${completionDate.toLocaleTimeString("en-US", {
@@ -151,7 +178,7 @@ export function WinnerPage() {
         second: "2-digit",
       })} on ${formattedNaturalDate}`
     : null;
-  const durationLabel = duration != null ? formatDuration(duration) : null;
+  const durationLabel = frozenDurationMs != null ? formatDuration(frozenDurationMs) : null;
   const summaryLine = useMemo(() => {
     if (!player) return "";
     return getRandomCertificateSummary({
@@ -220,7 +247,7 @@ export function WinnerPage() {
 
   return (
     <PageShell>
-      <div className="w-full bg-[#f7f1e9]/80">
+      <div className="w-full max-w-full overflow-x-hidden bg-[#f7f1e9]/80">
         <div className="mx-auto w-full max-w-6xl px-4 py-3">
           {isLoading ? (
             <p className={messageTextClass}>Loading winner details…</p>
@@ -309,8 +336,8 @@ export function WinnerPage() {
                 </div>
               ) : null}
 
-              <div className="mt-1 mx-auto flex max-w-6xl items-start gap-6">
-                <section className="flex-1">
+              <div className="mt-1 mx-auto flex w-full max-w-6xl flex-col gap-6 lg:flex-row lg:items-start">
+                <section className="flex-1 w-full">
                   <WinnerCertificate
                     winnerName={player.name}
                     summaryLine={summaryLine}
@@ -318,7 +345,7 @@ export function WinnerPage() {
                     certificateRef={certificateRef}
                   />
                 </section>
-                <aside className="w-72 shrink-0">
+                <aside className="w-full sm:w-auto max-w-[90vw] mx-auto sm:mx-0 mt-4 sm:mt-0 lg:mt-0 lg:w-72 lg:shrink-0">
                   <div className={leaderboardCardClass}>
                     <h3 className={leaderboardHeaderClass}>Leaderboard</h3>
                     {leaderboard.length ? (

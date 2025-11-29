@@ -21,7 +21,7 @@ export function PageShell({ children, hideHeader = false, mainClassName }: PageS
 
   const betaClass = isDark ? "text-xs uppercase tracking-[0.3em] text-slate-400" : "text-xs uppercase tracking-[0.3em] text-slate-500";
   const brandClass = isDark ? "text-lg font-semibold tracking-tight text-slate-50" : "text-lg font-semibold tracking-tight text-slate-900";
-  const shellClass = isDark ? "text-slate-100" : "text-slate-900";
+  const shellClass = `${isDark ? "text-slate-100" : "text-slate-900"} w-full max-w-full overflow-x-hidden`;
   const resolvedMainClass = mainClassName ?? "mx-auto w-full max-w-6xl px-4 py-8";
 
   return (
@@ -47,7 +47,7 @@ export function PageShell({ children, hideHeader = false, mainClassName }: PageS
           </div>
         </header>
       ) : null}
-      <main className={resolvedMainClass}>{children}</main>
+      <main className={`${resolvedMainClass} w-full max-w-full`}>{children}</main>
     </div>
   );
 }

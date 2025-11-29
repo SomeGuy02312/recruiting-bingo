@@ -114,9 +114,6 @@ export function RoomPage() {
     return `${origin}/r/${roomId}`;
   }, [roomId]);
 
-  const mainCardClass = isDark
-    ? "rounded-2xl border border-slate-700 bg-slate-900/80 p-5 shadow-xl"
-    : "rounded-2xl border border-slate-200 bg-white/90 p-5 shadow-lg";
   const sidebarCardClass = isDark
     ? "rounded-2xl border border-slate-700 bg-slate-900/80 p-4 shadow-md"
     : "rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm";
@@ -372,7 +369,8 @@ export function RoomPage() {
 
     return (
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6 md:flex-row md:items-start">
-        <div className="flex flex-1 flex-col gap-4">
+        <div className="flex flex-1 justify-center md:justify-start">
+          <div className="flex w-full max-w-2xl flex-col gap-4">
           {shouldShowWinnerBanner && player && room ? (
             <div className="rounded-2xl bg-gradient-to-r from-sky-500 via-violet-500 to-pink-500 px-4 py-3 text-slate-50 shadow-lg">
               <div className="flex flex-wrap items-center justify-between gap-3 text-sm font-semibold">
@@ -404,33 +402,30 @@ export function RoomPage() {
           ) : null}
 
           {room.card ? (
-            <div className={mainCardClass}>
-              <div className="flex items-center justify-between">
-                <h3 className={isDark ? "text-xl font-semibold text-slate-50" : "text-xl font-semibold text-slate-900"}>Your card</h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-end">
                 {room.endedAt ? <span className={mutedTextClass}>Ended {new Date(room.endedAt).toLocaleString()}</span> : null}
               </div>
               {feedback ? (
-                <p className={isDark ? "mt-2 text-xs text-rose-300" : "mt-2 text-xs text-rose-500"}>{feedback}</p>
+                <p className={isDark ? "text-xs text-rose-300" : "text-xs text-rose-500"}>{feedback}</p>
               ) : null}
-              <div className="mt-4">
-                <BingoCard
-                  card={room.card}
-                  marked={currentPlayer?.marked ?? fallbackMarked}
-                  playerColor={currentPlayer?.color ?? player?.color}
-                  interactive={canInteract}
-                  onToggleCell={canInteract ? handleCellToggle : undefined}
-                />
-              </div>
+              <BingoCard
+                card={room.card}
+                marked={currentPlayer?.marked ?? fallbackMarked}
+                playerColor={currentPlayer?.color ?? player?.color}
+                interactive={canInteract}
+                onToggleCell={canInteract ? handleCellToggle : undefined}
+              />
               {currentPlayerHadBingo && alreadyPromptedForBingo && !showBingoModal && canInteract ? (
                 <button
                   type="button"
                   onClick={() => setShowBingoModal(true)}
-                  className={isDark ? "mt-4 text-xs font-semibold text-sky-300 underline-offset-4 hover:underline" : "mt-4 text-xs font-semibold text-sky-600 underline-offset-4 hover:underline"}
+                  className={isDark ? "text-xs font-semibold text-sky-300 underline-offset-4 hover:underline" : "text-xs font-semibold text-sky-600 underline-offset-4 hover:underline"}
                 >
                   Ready to call bingo?
                 </button>
               ) : null}
-              {isGameOver ? <p className={`${mutedTextClass} mt-3`}>This game is now read-only.</p> : null}
+              {isGameOver ? <p className={mutedTextClass}>This game is now read-only.</p> : null}
             </div>
           ) : null}
 
@@ -455,7 +450,7 @@ export function RoomPage() {
               {bingoFeedback}
             </p>
           ) : null}
-
+          </div>
         </div>
 
         <aside className="flex w-full flex-shrink-0 flex-col gap-4 md:w-80">

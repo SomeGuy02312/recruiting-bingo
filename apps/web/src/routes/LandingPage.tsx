@@ -142,7 +142,10 @@ export function LandingPage() {
           </p>
         </section>
 
-        <section className="mt-4 rounded-3xl border border-slate-200 bg-white/90 px-6 py-5 text-left shadow-sm dark:border-slate-700 dark:bg-slate-900/70" id="create-game">
+        <section
+          className="mt-4 rounded-3xl border border-slate-200 bg-white px-6 py-5 text-left shadow-sm text-slate-900 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-50"
+          id="create-game"
+        >
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Start a game</p>
             <h2 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-slate-50">Ready to play?</h2>

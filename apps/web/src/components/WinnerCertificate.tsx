@@ -28,22 +28,22 @@ export function WinnerCertificate({
   return (
     <div
       ref={certificateRef}
-      className="bg-[#fdf4e4] rounded-3xl border border-[#f1e1c5] shadow-[0_18px_40px_rgba(15,23,42,0.18)] px-6 py-4 flex flex-col items-center text-center"
+      className="w-full max-w-[95vw] mx-auto p-3 sm:p-6 rounded-3xl shadow-lg overflow-hidden bg-[#fdf4e4] border border-[#f1e1c5] flex flex-col items-center text-center"
     >
-      <header className="flex flex-col items-center text-center">
-        <div className="mb-0.5 flex justify-center text-3xl" aria-hidden="true">
+      <header className="flex flex-col items-center text-center text-balance">
+        <div className="mb-0.5 flex justify-center text-2xl sm:text-3xl" aria-hidden="true">
           {highlightEmoji}
         </div>
         <p className="mb-0.5 text-[11px] uppercase tracking-[0.22em] text-slate-500">RECRUITING BINGO CHAMPION</p>
-        <h1 className="mb-0.5 text-3xl font-semibold text-slate-900">{winnerName} is the winner!</h1>
-        {subtitle ? <p className="mb-2 text-base text-slate-600">{subtitle}</p> : null}
+        <h1 className="mb-0.5 text-lg sm:text-xl md:text-2xl font-semibold text-slate-900 text-center text-balance">{winnerName} is the winner!</h1>
+        {subtitle ? <p className="mb-2 text-sm sm:text-base text-slate-600 text-center text-balance">{subtitle}</p> : null}
       </header>
 
       <div className="mt-4 flex w-full flex-col items-center gap-4">
         {cardImageUrl ? <CapturedCardImage cardImageUrl={cardImageUrl} /> : <CardPlaceholder />}
 
         {summaryLine ? (
-          <p className="mt-3 max-w-xl text-center text-base text-slate-700 mx-auto">{summaryLine}</p>
+          <p className="mt-3 max-w-xl text-center text-pretty text-base text-slate-700 mx-auto">{summaryLine}</p>
         ) : null}
         <div className="mt-3 w-full border-t border-[#f0ddbf] pt-2">
           <p className="text-center text-sm text-slate-500">
@@ -70,15 +70,19 @@ export function WinnerCertificate({
 
 function CapturedCardImage({ cardImageUrl }: { cardImageUrl: string }) {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-full">
       <div
-        className="inline-flex rounded-2xl border border-slate-200 bg-white px-3 py-3 shadow-[0_16px_35px_rgba(15,23,42,0.22)]"
+        className="inline-flex rounded-2xl border border-slate-200 bg-white px-3 py-3 shadow-[0_16px_35px_rgba(15,23,42,0.22)] w-full max-w-sm"
         style={{
           transform: "perspective(900px) rotateX(18deg) rotateZ(8deg) translateY(-4px)",
           transformOrigin: "center",
         }}
       >
-        <img src={cardImageUrl} alt="Winning Recruiting Bingo card" className="block h-auto w-[260px] max-w-full rounded-xl" />
+        <img
+          src={cardImageUrl}
+          alt="Winning Recruiting Bingo card"
+          className="block w-full max-w-full h-auto object-contain mx-auto rounded-xl"
+        />
       </div>
     </div>
   );

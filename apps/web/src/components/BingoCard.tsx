@@ -102,7 +102,7 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
   const headerGridClass = `grid grid-cols-5 gap-2 text-center font-bold tracking-[0.35em] text-white ${
     isPreview ? "text-sm" : "text-2xl sm:text-[1.65rem]"
   }`;
-  const bodyWrapperClass = isPreview ? "px-2 pb-2 pt-1" : "px-4 pb-4 pt-3";
+  const bodyWrapperClass = isPreview ? "px-2 pb-2 pt-1" : "px-2 pb-3 pt-2 sm:px-4 sm:pb-4 sm:pt-3";
   const gridContainerClass = isDark
     ? `grid grid-cols-5 rounded-b-2xl bg-slate-900/40 ${isPreview ? "gap-0.5" : "gap-1"}`
     : `grid grid-cols-5 rounded-b-2xl bg-slate-50 ${isPreview ? "gap-0.5" : "gap-1"}`;
@@ -112,8 +112,8 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
   const markedClasses = isDark ? "bg-slate-900/80 border-slate-600" : "bg-slate-50 border-slate-300";
   const baseCellClasses =
     isPreview
-      ? "relative flex aspect-square items-start justify-center rounded-xl border px-1 py-1 text-center"
-      : "relative flex min-h-[70px] items-center justify-center rounded-xl border px-2 py-2 text-center text-xs leading-snug transition duration-150 sm:min-h-[90px] sm:text-sm";
+      ? "relative flex aspect-square items-start justify-center rounded-xl border px-1 py-1 text-center overflow-hidden min-w-0"
+      : "relative flex aspect-square sm:aspect-square md:aspect-auto items-center justify-center rounded-xl border px-2 py-2 text-center text-xs leading-snug transition duration-150 md:min-h-[70px] lg:min-h-[90px] sm:text-sm overflow-hidden min-w-0";
 
   const textTone = isDark ? "text-slate-100" : "text-slate-900";
 
@@ -209,8 +209,10 @@ function CellContent({
   return (
     <span className="relative flex h-full w-full items-center justify-center text-center">
       <span
-        className={`relative z-10 block w-full px-0.5 text-pretty text-center ${
-          variant === "preview" ? "text-[8px] leading-[1.1] break-words text-slate-800" : "leading-snug"
+        className={`relative z-10 block w-full px-0.5 text-center break-words hyphens-auto whitespace-normal leading-tight ${
+          variant === "preview"
+            ? "text-[8px] leading-[1.1] text-slate-800"
+            : "text-[7px] sm:text-[10px] md:text-xs"
         } ${textClass}`}
       >
         {entry}

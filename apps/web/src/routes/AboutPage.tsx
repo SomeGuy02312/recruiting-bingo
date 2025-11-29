@@ -38,7 +38,7 @@ const faqItems = [
   {
     question: "Can I host it myself?",
     answer:
-      "Absolutely. The project is MIT-licensed. Fork it, re-theme it, or deploy it to your own Cloudflare account."
+      "Absolutely. The project is Polyform-licensed. Fork it, re-theme it, or deploy it to your own Cloudflare account."
   }
 ];
 
@@ -77,18 +77,18 @@ const IconLink = ({ href, label, children }: { href: string; label: string; chil
 export function AboutPage() {
   return (
     <PageShell>
-      <main className="mx-auto max-w-4xl px-4 py-10 text-left">
+      <main className="mx-auto max-w-4xl px-4 py-10 text-left text-slate-900 dark:text-slate-50">
         <section className="space-y-3">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">About Recruiting Bingo</p>
           <h1 className="text-3xl font-semibold text-slate-900 dark:text-slate-50">A no-BS product for talent teams and their hiring partners</h1>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          <p className="text-sm md:text-base text-slate-600 dark:text-slate-300">
             Recruiting Bingo turns real hiring chaos into a playful shared experience. Hosts spin up a room, share a link, and everyone marks squares together. When someone wins, the app confirms it, triggers fireworks, and keeps the room perfectly synced.
           </p>
         </section>
 
         <section className="mt-12 flex flex-col gap-6 lg:flex-row">
-          <div className="flex-1 space-y-4 rounded-3xl border border-slate-200 bg-white/90 p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-50">How the game works</h2>
+          <div className="flex-1 space-y-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-50">
+            <h2 className="text-xl font-semibold">How the game works</h2>
             <ol className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
               {steps.map((step, index) => (
                 <li key={step} className="flex gap-3">
@@ -99,8 +99,8 @@ export function AboutPage() {
             </ol>
           </div>
 
-          <div className="flex-1 space-y-4 rounded-3xl border border-slate-200 bg-white/90 p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900/70">
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-50">Tech stack & sync</h2>
+          <div className="flex-1 space-y-4 rounded-3xl border border-slate-200 bg-white p-6 text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-50">
+            <h2 className="text-xl font-semibold">Tech stack & sync</h2>
             <ul className="list-disc space-y-2 pl-5 text-sm text-slate-700 dark:text-slate-300">
               <li>React + TypeScript + Vite + Tailwind in a monorepo that shares logic via <code>@recruiting-bingo/shared</code>.</li>
               <li>Cloudflare Workers store the room state and card (default or custom) on creation.</li>
@@ -112,9 +112,9 @@ export function AboutPage() {
 
         <section className="mt-12 space-y-4">
           <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-50">Who built this?</h2>
-          <p className="rounded-3xl border border-slate-200 bg-white/90 p-6 text-sm text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-300">
-            I’m a product nerd and ex-recruiter building this alongside ChatGPT. The whole project is an experiment in AI-assisted product creation:
-            can a tiny team (me + GPT) ship features, design polish, and storytelling without turning it into a VC spiel? So far, yes—and I’m sharing the results here.
+          <p className="rounded-3xl border border-slate-200 bg-white p-6 text-sm text-slate-700 shadow-sm dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-300">
+            I’m a Snr Product Manager (ex-recruiter!) building with a modern AI coding stack. The  project is an experiment in AI-assisted product creation:
+            can a tiny team (me + GPT) ship features, design polish, and tell a compelling story?  So far, yes—and I’m sharing the results here.
           </p>
           <div className="flex flex-wrap gap-3">
             <IconLink href="https://github.com/SomeGuy02312" label="My GitHub">
@@ -123,7 +123,7 @@ export function AboutPage() {
             <IconLink href="https://github.com/SomeGuy02312/recruiting-bingo" label="Project Repo">
               <RepoIcon />
             </IconLink>
-            <IconLink href="https://www.linkedin.com" label="LinkedIn">
+            <IconLink href="https://www.linkedin.com/in/epedini/" label="LinkedIn">
               <LinkedInIcon />
             </IconLink>
           </div>
