@@ -16,6 +16,7 @@ tag = "v1"
 new_sqlite_classes = ["RoomDurableObject"]
 
 [env.production]
+name = "recruiting-bingo"
 routes = [
   { pattern = "bingo.hiregear.us/*", zone_name = "hiregear.us" }
 ]
