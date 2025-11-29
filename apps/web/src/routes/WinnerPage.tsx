@@ -107,7 +107,6 @@ export function WinnerPage() {
   const leaderboardHeaderClass = isDark ? "text-lg font-semibold text-slate-100" : "text-lg font-semibold text-slate-900";
   const [copiedShare, setCopiedShare] = useState(false);
   const messageTextClass = isDark ? "text-slate-400" : "text-slate-500";
-  const mutedTextClass = isDark ? "text-xs text-slate-400" : "text-xs text-slate-500";
 
   const leaderboard = useMemo(() => {
     if (!room) return [];

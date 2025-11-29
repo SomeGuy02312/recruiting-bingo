@@ -137,7 +137,7 @@ export function BingoCard({ card, marked, playerColor, interactive = false, onTo
           const hoverStyles = interactive
             ? "hover:border-sky-400 hover:shadow-md hover:shadow-sky-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
             : "";
-          let variation = strokeVariationsRef.current[index];
+          let variation: StrokeVariation | undefined = strokeVariationsRef.current[index];
           if (isMarked) {
             if (!variation) {
               variation = generateStrokeVariation();

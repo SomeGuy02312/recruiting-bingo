@@ -11,7 +11,7 @@ import { getDefaultRecruitingLibrary } from "@recruiting-bingo/shared";
 export function LandingPage() {
   const navigate = useNavigate();
   const [creatorName, setCreatorName] = useState("");
-  const [creatorColor, setCreatorColor] = useState(darkTheme.playerSwatches[0] ?? "#38BDF8");
+  const [creatorColor, setCreatorColor] = useState<string>(darkTheme.playerSwatches[0] ?? "#38BDF8");
   const [roomName, setRoomName] = useState("");
   const [stopAtFirstWinner, setStopAtFirstWinner] = useState(false);
   const [error, setError] = useState<string | null>(null);
