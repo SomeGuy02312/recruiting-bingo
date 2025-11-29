@@ -3,4 +3,5 @@
 export interface Env {
   ROOM_DO: DurableObjectNamespace;
   STATS_KV: KVNamespace;
+  ASSETS: Fetcher;
 }
