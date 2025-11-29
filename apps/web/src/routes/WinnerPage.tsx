@@ -99,10 +99,20 @@ export function WinnerPage() {
   const isWinner = winnerIndex >= 0;
   const currentWinnerPageUrl = typeof window !== "undefined" ? window.location.href : "https://bingo.hiregear.us";
   const baseLinkedInShareUrl = "https://www.linkedin.com/sharing/share-offsite/?url=";
-  const winnerUrlWithUtm = `${currentWinnerPageUrl}${currentWinnerPageUrl.includes("?") ? "&" : "?"}utm_source=recruiting-bingo&utm_medium=winner-share`;
-  const linkedInShareUrl = `${baseLinkedInShareUrl}${encodeURIComponent(winnerUrlWithUtm)}`;
+  const winnerShareUrl = (() => {
+    try {
+      const url = new URL(currentWinnerPageUrl);
+      url.searchParams.set("utm_source", "recruiting-bingo");
+      url.searchParams.set("utm_medium", "winner-share");
+      return url.toString();
+    } catch (err) {
+      console.error("Unable to construct winner share URL", err);
+      return "https://bingo.hiregear.us/?utm_source=recruiting-bingo&utm_medium=winner-share";
+    }
+  })();
+  const linkedInShareUrl = `${baseLinkedInShareUrl}${encodeURIComponent(winnerShareUrl)}`;
   const fromGameFlow = Boolean((location.state as { fromGame?: boolean } | null)?.fromGame);
-  const canShare = Boolean(isWinner && player && room && currentWinnerPageUrl && fromGameFlow);
+  const canShare = Boolean(isWinner && player && room && fromGameFlow);
   const leaderboardCardClass = [
     "rounded-3xl p-3 text-left shadow-lg",
     isDark ? "border border-slate-700 bg-slate-900/70 text-slate-100" : "border border-slate-200 bg-white text-slate-900",
